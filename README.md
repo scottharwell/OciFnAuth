@@ -23,7 +23,7 @@ The input fields of this extension requires your OCI private key in order to sig
 
 ![Extension Input Fields](https://i.imgur.com/3Npipux.png)
 
-Because of the private key use, you should enable encryption in your Paw project so that the key remains secure. It is recommended that you have multiple keys and that you only use a key for testing with the Paw client.  The `Private Key` field will be green if you have encryption enabled.
+Because of the private key use, you should enable encryption in your Paw project so that the key remains secure. It is recommended that you have multiple keys and that you only use a key for testing with the Paw client. The `Private Key` field will be green if you have encryption enabled.
 
 ## Development
 
