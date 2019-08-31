@@ -17,4 +17,4 @@ test:
 	npm test
 
 archive: build
-	cd ./build/; zip -r OCIFnAuth.zip "$(identifier)/"
+	cd ./build/; zip -r OciFnAuth.zip "$(identifier)/"
