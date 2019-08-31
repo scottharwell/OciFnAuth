@@ -15,7 +15,7 @@ The following image shows all of the headers required for a `POST` request.
 * x-content-sha256: Use the `SHA256` dynamic value with base64 encoding.
 * Authorization: Use this extension.
 
-![Header Configuration](https://i.imgur.com/mL047zp.png?1 "Paw Screenshot")
+![Header Configuration](https://i.imgur.com/TIMng7P.png)
 
 ## Configuring the Extension
 
