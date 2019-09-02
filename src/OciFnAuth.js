@@ -36,9 +36,8 @@ class OciFnAuth {
 			"(request-target)",
 			"host"
 		];
-		const methodsThatRequireExtraHeaders = ["POST", "PUT"];
-		const apiKeyId = "\"" + this.tenancyId + "/" + this.userId + "/" + this.keyFingerprint + "\"";
 
+		const methodsThatRequireExtraHeaders = ["POST", "PUT"];
 		if (methodsThatRequireExtraHeaders.indexOf(method.toUpperCase()) !== -1) {
 			headersToSign = headersToSign.concat([
 				"content-length",
@@ -46,6 +45,15 @@ class OciFnAuth {
 				"x-content-sha256"
 			]);
 		}
+
+		// if x-date and date are included, then drop the date header
+		if (typeof(request.getHeaderByName("x-date")) === "string") {
+			headersToSign[0] = "x-date";
+		}
+
+		const apiKeyId = "\"" + this.tenancyId + "/" + this.userId + "/" + this.keyFingerprint + "\"";
+
+		console.log(JSON.stringify(headersToSign));
 
 		let signingStr = "";
 
@@ -81,7 +89,7 @@ class OciFnAuth {
 			}
 
 			const val = request.getHeaderByName(header);
-			if (val !== undefined) {
+			if (typeof(val) === "string") {
 				if (signingStr.length > 0) {
 					signingStr += "\n";
 				}
