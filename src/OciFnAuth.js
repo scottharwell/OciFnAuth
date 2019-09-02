@@ -53,8 +53,6 @@ class OciFnAuth {
 
 		const apiKeyId = "\"" + this.tenancyId + "/" + this.userId + "/" + this.keyFingerprint + "\"";
 
-		console.log(JSON.stringify(headersToSign));
-
 		let signingStr = "";
 
 		for (const header of headersToSign) {
