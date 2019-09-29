@@ -4,7 +4,7 @@ import jsrsasign from 'jsrsasign';
 @registerDynamicValueClass
 class OciFnAuth {
 	static identifier = "me.harwell.PawExtensions.OciFnAuth";
-	static title = "OCI F(n) Auth";
+	static title = "OCI API Auth";
 	static inputs = [
 		InputField("tenancyId", "Tenancy OCID", "String", { persisted: true, placeholder: "ocid1.tenancy.oc1..aaaaaaaap______keq" }),
 		InputField("userId", "Auth User OCID", "String", { persisted: true, placeholder: "ocid1.user.oc1..aaaaaaaas______7ap" }),
@@ -46,6 +46,9 @@ class OciFnAuth {
 			]);
 		}
 
+		const urlBase = request.urlBase.replace(/(http|https)\:\/\/([a-zA-Z0-9\.\-_]+)\/.*/gi, "$2");
+		const urlPath = request.urlBase.replace(/(http|https)\:\/\/[a-zA-Z0-9\.\-_]+/gi, "");
+
 		// if x-date and date are included, then drop the date header
 		if (typeof(request.getHeaderByName("x-date")) === "string") {
 			headersToSign[0] = "x-date";
@@ -56,10 +59,51 @@ class OciFnAuth {
 		let signingStr = "";
 
 		for (const header of headersToSign) {
+			if (signingStr.length > 0) {
+				signingStr += "\n";
+			}
+
+			switch (header) {
+				case "(request-target)":
+						let requestTarget = "(request-target): " + method.toLowerCase() + " " + urlPath;
+		
+						const paramNames = request.getUrlParametersNames();
+						
+						if (paramNames !== undefined && paramNames.length > 0) {
+							let queryStr = "?";
+							let index = 0;
+							for (const param of paramNames) {
+								const val = encodeURIComponent(request.getUrlParameterByName(param));
+								queryStr += index > 0 ? "&" : "";
+								queryStr += param + "=" + val;
+								index++;
+							}
+		
+							requestTarget += queryStr;
+						}
+		
+						signingStr += requestTarget;
+				break;
+				case "content-length":
+						signingStr += header + ": " + body.length;
+				break;
+				case "host":
+						signingStr += header + ": " + urlBase;
+				break;
+				default:
+						const val = request.getHeaderByName(header);
+						if (typeof(val) === "string") {
+							signingStr += header + ": " + val;
+						} else {
+							throw new Error("Required header has no value: " + header);
+						}
+				break;
+			}
+
+			/*
 			if (header == "(request-target)") {
 				let requestTarget = "(request-target): " + method.toLowerCase();
 
-				const urlBase = request.urlBase.replace(/https\:\/\/[a-zA-Z0-9\.\-_]+/gi, "");
 				requestTarget += " " + urlBase;
 
 				const paramNames = request.getUrlParametersNames();
@@ -77,25 +121,23 @@ class OciFnAuth {
 					requestTarget += queryStr;
 				}
 
-				if (signingStr.length > 0) {
-					signingStr += "\n";
-				}
-
 				signingStr += requestTarget;
-
-				continue;
 			}
-
-			const val = request.getHeaderByName(header);
-			if (typeof(val) === "string") {
-				if (signingStr.length > 0) {
-					signingStr += "\n";
+			else if (header == "content-length") {
+				signingStr += header + ": " + body.length;
+			}
+			else {
+				const val = request.getHeaderByName(header);
+				if (typeof(val) === "string") {
+					signingStr += header + ": " + val;
+				} else {
+					throw new Error("Required header has no value: " + header);
 				}
-				signingStr += header + ": " + val;
 			}
+			*/
 		}
 
-		//console.log(signingStr);
+		console.log(signingStr);
 
 		// initialize
 		const sig = new jsrsasign.crypto.Signature({ "alg": "SHA256withRSA", "prov": "cryptojs/jsrsa" });

@@ -1,6 +1,6 @@
 {
   "name": "me.harwell.pawextensions.ocifnauth",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Constructs a signed authorization header for making HTTP calls to F(n) on Oracle Compute Infrastructure.",
   "main": "OciFnAuth.js",
   "scripts": {
