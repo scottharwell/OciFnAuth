@@ -14,16 +14,16 @@ class OciFnAuth {
 
 	evaluate(context) {
 		// Ensure that all fields exist
-		if (typeof(this.tenancyId) !== "string" || this.tenancyId.length === 0) {
+		if (typeof (this.tenancyId) !== "string" || this.tenancyId.length === 0) {
 			throw new Error("Tenancy OCID field is empty.");
 		}
-		if (typeof(this.userId) !== "string" && this.userId.length === 0) {
+		if (typeof (this.userId) !== "string" && this.userId.length === 0) {
 			throw new Error("User OCID field is empty.");
 		}
-		if (typeof(this.keyFingerprint) !== "string" && this.keyFingerprint.length === 0) {
+		if (typeof (this.keyFingerprint) !== "string" && this.keyFingerprint.length === 0) {
 			throw new Error("Public key fingerprint field is empty.");
 		}
-		if (typeof(this.privateKey) !== "string" && this.privateKey.length === 0) {
+		if (typeof (this.privateKey) !== "string" && this.privateKey.length === 0) {
 			throw new Error("Private key field is empty.");
 		}
 
@@ -50,7 +50,7 @@ class OciFnAuth {
 		const urlPath = request.urlBase.replace(/(http|https)\:\/\/[a-zA-Z0-9\.\-_]+/gi, "");
 
 		// if x-date and date are included, then drop the date header
-		if (typeof(request.getHeaderByName("x-date")) === "string") {
+		if (typeof (request.getHeaderByName("x-date")) === "string") {
 			headersToSign[0] = "x-date";
 		}
 
@@ -65,79 +65,43 @@ class OciFnAuth {
 
 			switch (header) {
 				case "(request-target)":
-						let requestTarget = "(request-target): " + method.toLowerCase() + " " + urlPath;
-		
-						const paramNames = request.getUrlParametersNames();
-						
-						if (paramNames !== undefined && paramNames.length > 0) {
-							let queryStr = "?";
-							let index = 0;
-							for (const param of paramNames) {
-								const val = encodeURIComponent(request.getUrlParameterByName(param));
-								queryStr += index > 0 ? "&" : "";
-								queryStr += param + "=" + val;
-								index++;
-							}
-		
-							requestTarget += queryStr;
+					let requestTarget = "(request-target): " + method.toLowerCase() + " " + urlPath;
+
+					const paramNames = request.getUrlParametersNames();
+
+					if (paramNames !== undefined && paramNames.length > 0) {
+						let queryStr = "?";
+						let index = 0;
+						for (const param of paramNames) {
+							const val = encodeURIComponent(request.getUrlParameterByName(param));
+							queryStr += index > 0 ? "&" : "";
+							queryStr += param + "=" + val;
+							index++;
 						}
-		
-						signingStr += requestTarget;
-				break;
-				case "content-length":
-						signingStr += header + ": " + body.length;
-				break;
-				case "host":
-						signingStr += header + ": " + urlBase;
-				break;
-				default:
-						const val = request.getHeaderByName(header);
-						if (typeof(val) === "string") {
-							signingStr += header + ": " + val;
-						} else {
-							throw new Error("Required header has no value: " + header);
-						}
-				break;
-			}
 
-			/*
-			if (header == "(request-target)") {
-				let requestTarget = "(request-target): " + method.toLowerCase();
-
-				requestTarget += " " + urlBase;
-
-				const paramNames = request.getUrlParametersNames();
-				
-				if (paramNames !== undefined && paramNames.length > 0) {
-					let queryStr = "?";
-					let index = 0;
-					for (const param of paramNames) {
-						const val = encodeURIComponent(request.getUrlParameterByName(param));
-						queryStr += index > 0 ? "&" : "";
-						queryStr += param + "=" + val;
-						index++;
+						requestTarget += queryStr;
 					}
 
-					requestTarget += queryStr;
-				}
-
-				signingStr += requestTarget;
+					signingStr += requestTarget;
+					break;
+				case "content-length":
+					signingStr += header + ": " + body.length;
+					break;
+				case "host":
+					signingStr += header + ": " + urlBase;
+					break;
+				default:
+					const val = request.getHeaderByName(header);
+					if (typeof (val) === "string") {
+						signingStr += header + ": " + val;
+					} else {
+						throw new Error("Required header has no value: " + header);
+					}
+					break;
 			}
-			else if (header == "content-length") {
-				signingStr += header + ": " + body.length;
-			}
-			else {
-				const val = request.getHeaderByName(header);
-				if (typeof(val) === "string") {
-					signingStr += header + ": " + val;
-				} else {
-					throw new Error("Required header has no value: " + header);
-				}
-			}
-			*/
 		}
 
-		console.log(signingStr);
+		//console.log(signingStr);
 
 		// initialize
 		const sig = new jsrsasign.crypto.Signature({ "alg": "SHA256withRSA", "prov": "cryptojs/jsrsa" });
@@ -148,20 +112,15 @@ class OciFnAuth {
 		sig.updateString(signingStr);
 		// calculate signature
 		const sigValueHex = sig.sign();
-		//console.log("Sign String: " + signingStr);
-		//console.log("Sign Hex: " + sigValueHex);
 
 		// convert signature hex to base64
 		const base64Sig = jsrsasign.hextob64(sigValueHex);
-		//console.log(sig.state);
-		//console.log("Base64 of Hex: " + base64Sig);
 
 		// finish constructing the Authorization header with the signed signature
 		dynamicValue += ",headers=" + "\"" + headersToSign.join(" ") + "\"";
 		dynamicValue += ",keyId=" + apiKeyId;
 		dynamicValue += ",algorithm=\"rsa-sha256\"";
 		dynamicValue += ",signature=" + "\"" + base64Sig + "\"";
-		//console.log(dynamicValue);
 
 		return dynamicValue;
 	}
