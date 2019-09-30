@@ -1,6 +1,6 @@
 # OciApiAuth
 
-This extention creates the `authorization` header for a direct HTTP REST request to Oracle's OCI implementation of the F(n) platform.  The extension will leverage the required headers based on the type of request (GET, POST, etc.).  See the OCI F(n) documentation for reference regarding the required headers.  
+This extention creates the `authorization` header for request to Oracle's OCI REST APIs.  The extension will leverage the required headers based on the type of request (GET, POST, etc.).  See the OCI REST authorization documentation for reference regarding the required headers.  
 
 POST and PUT requests also require a `x-content-sha256` header calculated based on the body of the request.  The default `SHA256` dynamic value should be used to calculate this header; ensure that base64 encoding is used.
 
@@ -12,7 +12,7 @@ The following image shows all of the headers required for a `POST` request.
 * Date: Use the {Timestamp} dynamic value built into Paw to create an RFC 1123/2822 value for the current time.
 * Content-Length: Provided by Paw. You do not need to manually set this value. 
 * Content-Type: `application/json`
-* x-content-sha256: Use the `SHA256` dynamic value with base64 encoding.
+* x-content-sha256: Use the `SHA256` dynamic value with base64 encoding as the value for this header.  In the input for the `SHA256` dynamic value, set the input to another dynamic value `Request Raw Body`.  These native dynamic values will generate the proper hash for this header.
 * Authorization: Use this extension.
 
 ![Header Configuration](https://i.imgur.com/TIMng7P.png)
