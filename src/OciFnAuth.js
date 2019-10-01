@@ -6,6 +6,8 @@ class OciFnAuth {
 	static identifier = "me.harwell.PawExtensions.OciFnAuth";
 	static title = "OCI API Auth";
 	static inputs = [
+		// At this point, there is only one signing version. This select box will help manage future releases.
+		InputField("version", "Signature Version", "Select", { "choices": { "1": "1" }, persisted: true }),
 		InputField("tenancyId", "Tenancy OCID", "String", { persisted: true, placeholder: "ocid1.tenancy.oc1..aaaaaaaap______keq" }),
 		InputField("userId", "Auth User OCID", "String", { persisted: true, placeholder: "ocid1.user.oc1..aaaaaaaas______7ap" }),
 		InputField("keyFingerprint", "Public Key Fingerprint", "String", { persisted: true, placeholder: "d1:b2:32:53:d3:5f:cf:68:2d:6f:8b:5f:77:8f:07:" }),
@@ -14,6 +16,9 @@ class OciFnAuth {
 
 	evaluate(context) {
 		// Ensure that all fields exist
+		if (typeof (this.version) !== "string" || this.version.length === 0) {
+			throw new Error("Signature version was not selected.");
+		}
 		if (typeof (this.tenancyId) !== "string" || this.tenancyId.length === 0) {
 			throw new Error("Tenancy OCID field is empty.");
 		}
@@ -27,7 +32,6 @@ class OciFnAuth {
 			throw new Error("Private key field is empty.");
 		}
 
-		let dynamicValue = 'Signature version="1"'; // generate some dynamic value
 		const request = context.getCurrentRequest();
 		const method = request.method;
 		let body = request.body;
@@ -46,7 +50,7 @@ class OciFnAuth {
 			]);
 		}
 
-		const urlBase = request.urlBase.replace(/(http|https)\:\/\/([a-zA-Z0-9\.\-_]+)\/.*/gi, "$2");
+		const hostname = request.urlBase.replace(/(http|https)\:\/\/([a-zA-Z0-9\.\-_]+)\/.*/gi, "$2");
 		const urlPath = request.urlBase.replace(/(http|https)\:\/\/[a-zA-Z0-9\.\-_]+/gi, "");
 
 		// if x-date and date are included, then drop the date header
@@ -88,7 +92,7 @@ class OciFnAuth {
 					signingStr += header + ": " + body.length;
 					break;
 				case "host":
-					signingStr += header + ": " + urlBase;
+					signingStr += header + ": " + hostname;
 					break;
 				default:
 					const val = request.getHeaderByName(header);
@@ -117,6 +121,7 @@ class OciFnAuth {
 		const base64Sig = jsrsasign.hextob64(sigValueHex);
 
 		// finish constructing the Authorization header with the signed signature
+		let dynamicValue = 'Signature version="' + this.version + '"'; // generate some dynamic value
 		dynamicValue += ",headers=" + "\"" + headersToSign.join(" ") + "\"";
 		dynamicValue += ",keyId=" + apiKeyId;
 		dynamicValue += ",algorithm=\"rsa-sha256\"";
