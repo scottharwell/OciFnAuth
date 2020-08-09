@@ -14,7 +14,7 @@ class OciFnAuth {
 		InputField("privateKey", "Private Key", "SecureValue", { persisted: true })
 	];
 
-	evaluate(context) {
+	evaluate (context) {
 		// Ensure that all fields exist
 		if (typeof (this.version) !== "string" || this.version.length === 0) {
 			throw new Error("Signature version was not selected.");
@@ -41,7 +41,7 @@ class OciFnAuth {
 			"host"
 		];
 
-		const methodsThatRequireExtraHeaders = ["POST", "PUT"];
+		const methodsThatRequireExtraHeaders = [ "POST", "PUT" ];
 		if (methodsThatRequireExtraHeaders.indexOf(method.toUpperCase()) !== -1) {
 			headersToSign = headersToSign.concat([
 				"content-length",
@@ -55,10 +55,10 @@ class OciFnAuth {
 
 		// if x-date and date are included, then drop the date header
 		if (typeof (request.getHeaderByName("x-date")) === "string") {
-			headersToSign[0] = "x-date";
+			headersToSign[ 0 ] = "x-date";
 		}
 
-		const apiKeyId = "\"" + this.tenancyId + "/" + this.userId + "/" + this.keyFingerprint + "\"";
+		const apiKeyId = `${this.tenancyId}/${this.userId}/${this.keyFingerprint}`;
 
 		let signingStr = "";
 
