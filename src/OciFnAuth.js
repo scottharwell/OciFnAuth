@@ -122,7 +122,7 @@ class OciFnAuth {
 		const headersStr = headersToSign.join(" ");
 
 		// finish constructing the Authorization header with the signed signature
-		let dynamicValue = `Signature version="${this.version}",headers="${headersStr}",keyId="${apiKeyId}",algorithm="rsa-sha256",signature="${base64Sig}"`;
+		const dynamicValue = `Signature version="${this.version}",headers="${headersStr}",keyId="${apiKeyId}",algorithm="rsa-sha256",signature="${base64Sig}"`;
 
 		//console.log(`Signing String: ${dynamicValue}`);
 
