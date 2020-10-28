@@ -3,9 +3,8 @@ import path from 'path';
 
 const name = 'OCIFnAuth';
 
-const production = process.env.NODE_ENV === 'production';
-
 const config = {
+  mode: 'production',
   target: 'node-webkit',
   entry: [
     'jsrsasign',
@@ -18,9 +17,9 @@ const config = {
     filename: name + '.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
-        loader: 'babel-loader',
+        use: 'babel-loader',
         include: [
           path.resolve(__dirname, 'src')
         ],
