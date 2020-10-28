@@ -119,13 +119,12 @@ class OciFnAuth {
 
 		// convert signature hex to base64
 		const base64Sig = jsrsasign.hextob64(sigValueHex);
+		const headersStr = headersToSign.join(" ");
 
 		// finish constructing the Authorization header with the signed signature
-		let dynamicValue = 'Signature version="' + this.version + '"'; // generate some dynamic value
-		dynamicValue += ",headers=" + "\"" + headersToSign.join(" ") + "\"";
-		dynamicValue += ",keyId=" + apiKeyId;
-		dynamicValue += ",algorithm=\"rsa-sha256\"";
-		dynamicValue += ",signature=" + "\"" + base64Sig + "\"";
+		let dynamicValue = `Signature version="${this.version}",headers="${headersStr}",keyId="${apiKeyId}",algorithm="rsa-sha256",signature="${base64Sig}"`;
+
+		//console.log(`Signing String: ${dynamicValue}`);
 
 		return dynamicValue;
 	}
