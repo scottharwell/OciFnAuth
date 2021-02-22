@@ -1,10 +1,10 @@
 {
   "name": "me.harwell.pawextensions.ocifnauth",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "Constructs a signed authorization header for making calls to Oracle Cloud Infrastructure REST APIs.",
   "main": "OciFnAuth.js",
   "scripts": {
-    "build": "rm -rf dist/ && BUILD_ENV=build ./node_modules/.bin/webpack",
+    "build": "rm -rf build/ && BUILD_ENV=build ./node_modules/.bin/webpack",
     "test": "exit 0"
   },
   "author": "Scott Harwell",

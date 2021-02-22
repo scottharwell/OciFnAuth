@@ -1,5 +1,4 @@
-import webpack from 'webpack';
-import path from 'path';
+const path = require('path');
 
 const name = 'OCIFnAuth';
 
@@ -11,7 +10,7 @@ const config = {
     './src/OciFnAuth.js'
   ],
   output:{
-    path: path.join(__dirname, './build/me.harwell.PawExtensions.OciFnAuth'),
+    path: path.join(__dirname, 'build/me.harwell.PawExtensions.OciFnAuth'),
     pathinfo: true,
     publicPath: '/build/',
     filename: name + '.js'
