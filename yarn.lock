@@ -1469,9 +1469,9 @@ json5@^2.1.2:
   dependencies:
     minimist "^1.2.5"
 
-jsrsasign@^10.0.4:
-  version "10.0.4"
-  resolved "https://registry.yarnpkg.com/jsrsasign/-/jsrsasign-10.0.4.tgz#45f62cb9088c5948cd804181d3484c7ab48165e0"
+jsrsasign@^10.2.0:
+  version "10.2.0"
+  resolved "https://registry.yarnpkg.com/jsrsasign/-/jsrsasign-10.2.0.tgz#960ab8046d19d3fcbb584368a57d1977cb0b7ffd"
 
 loader-runner@^4.1.0:
   version "4.1.0"
