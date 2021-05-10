@@ -1469,9 +1469,9 @@ json5@^2.1.2:
   dependencies:
     minimist "^1.2.5"
 
-jsrsasign@^10.0.4:
-  version "10.0.4"
-  resolved "https://registry.yarnpkg.com/jsrsasign/-/jsrsasign-10.0.4.tgz#45f62cb9088c5948cd804181d3484c7ab48165e0"
+jsrsasign@^10.2.0:
+  version "10.2.0"
+  resolved "https://registry.yarnpkg.com/jsrsasign/-/jsrsasign-10.2.0.tgz#960ab8046d19d3fcbb584368a57d1977cb0b7ffd"
 
 loader-runner@^4.1.0:
   version "4.1.0"
@@ -1499,8 +1499,8 @@ locate-path@^5.0.0:
     p-locate "^4.1.0"
 
 lodash@^4.17.15, lodash@^4.17.19:
-  version "4.17.20"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
 
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
