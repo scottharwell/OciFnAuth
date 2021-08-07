@@ -22,7 +22,7 @@ Example `GET` request configuration:
 * `Accept`: `application/json`
 * `Authorization`: `{OCI API Auth}` Use this extension!
 
-![Header Configuration](https://github.com/scottharwell/OciFnAuth/blob/master/img/get_headers.png?raw=true)
+![Header Configuration](https://raw.githubusercontent.com/scottharwell/OciFnAuth/main/img/get_headers.png)
 
 Example `POST` request configuration:
 
@@ -30,11 +30,11 @@ Example `POST` request configuration:
 * `x-content-sha256`:  Use the `{SHA256}` dynamic value with base64 encoding as the value for this header.
 * `Authorization`: `{OCI API Auth}` Use this extension!
 
-![Header Configuration](https://github.com/scottharwell/OciFnAuth/blob/master/img/post_headers.png?raw=true)
+![Header Configuration](https://raw.githubusercontent.com/scottharwell/OciFnAuth/main/img/post_headers.png)
 
 The configuration of the `{SHA256}` dynamic value:
 
-![SHA265 Header](https://github.com/scottharwell/OciFnAuth/blob/master/img/sha256_header.png?raw=true)
+![SHA265 Header](https://raw.githubusercontent.com/scottharwell/OciFnAuth/main/img/sha256_header.png)
 
 ## Configuring the Extension
 
