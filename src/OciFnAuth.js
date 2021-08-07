@@ -105,8 +105,6 @@ class OciFnAuth {
 			}
 		}
 
-		//console.log(signingStr);
-
 		// initialize
 		const sig = new jsrsasign.crypto.Signature({ "alg": "SHA256withRSA", "prov": "cryptojs/jsrsa" });
 		// initialize for signature validation
@@ -123,8 +121,6 @@ class OciFnAuth {
 
 		// finish constructing the Authorization header with the signed signature
 		const dynamicValue = `Signature version="${this.version}",headers="${headersStr}",keyId="${apiKeyId}",algorithm="rsa-sha256",signature="${base64Sig}"`;
-
-		//console.log(`Signing String: ${dynamicValue}`);
 
 		return dynamicValue;
 	}
