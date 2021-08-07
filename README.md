@@ -40,7 +40,7 @@ The configuration of the `{SHA256}` dynamic value:
 
 The input fields of this extension requires the private key that matches your public key fingerprint in order to sign the request so that OCI will consume it. This is the same mechanism used in the `oci_curl.sh` documentation, but with the key being read from Paw rather than your local file system.  This approach is required due to app sandboxing in MacOS apps.
 
-![Extension Input Fields](https://github.com/scottharwell/OciFnAuth/blob/master/img/ext_config.png?raw=true)
+![Extension Input Fields](https://raw.githubusercontent.com/scottharwell/OciFnAuth/main/img/ext_config.png)
 
 Because of the private key use, you should enable encryption in your Paw project so that the key remains secure. It is recommended that you have multiple keys and that you only use a key for testing with the Paw client. The `Private Key` field will be green if you have encryption enabled.
 
