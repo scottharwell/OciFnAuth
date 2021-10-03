@@ -1,8 +1,8 @@
 # OciApiAuth
 
-This extention creates the `Authorization` header for requests to Oracle's OCI REST APIs.  The extension will leverage the required headers based on the type of request (GET, POST, etc.).  See the OCI [signing requests](https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/signingrequests.htm) documentation for reference regarding the required headers.  
+This extension creates the `Authorization` header for requests to Oracle's OCI REST APIs.  The extension will leverage the required headers based on the type of request (GET, POST, etc.).  See the OCI [signing requests](https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/signingrequests.htm) documentation for reference regarding the required headers.  
 
-This extension requires that you use an OCI account that has permissions to access the OCI REST APIs and that you have configured a public/private keypair for your account.
+This extension requires that you use an OCI account that has permissions to access the OCI REST APIs and that you have configured a public/private key pair for your account.
 
 ## Example
 
@@ -38,7 +38,7 @@ The configuration of the `{SHA256}` dynamic value:
 
 ## Configuring the Extension
 
-The input fields of this extension requires the private key that matches your public key fingerprint in order to sign the request so that OCI will consume it. This is the same mechanism used in the `oci_curl.sh` documentation, but with the key being read from Paw rather than your local file system.  This approach is required due to app sandboxing in MacOS apps.
+The input fields of this extension requires the private key that matches your public key fingerprint in order to sign the request so that OCI will consume it. This is the same mechanism used in the `oci_curl.sh` documentation, but with the key being read from Paw rather than your local file system.  This approach is required due to app sand-boxing in MacOS apps.
 
 ![Extension Input Fields](https://raw.githubusercontent.com/scottharwell/OciFnAuth/main/img/ext_config.png)
 
