@@ -1,5 +1,7 @@
 # OciApiAuth
 
+[![CodeQL](https://github.com/scottharwell/OciFnAuth/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/scottharwell/OciFnAuth/actions/workflows/codeql-analysis.yml)
+
 This extension creates the `Authorization` header for requests to Oracle's OCI REST APIs.  The extension will leverage the required headers based on the type of request (GET, POST, etc.).  See the OCI [signing requests](https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/signingrequests.htm) documentation for reference regarding the required headers.  
 
 This extension requires that you use an OCI account that has permissions to access the OCI REST APIs and that you have configured a public/private key pair for your account.
