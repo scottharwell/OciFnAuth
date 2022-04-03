@@ -1,6 +1,6 @@
 {
   "name": "me.harwell.pawextensions.ocifnauth",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "Constructs a signed authorization header for making calls to Oracle Cloud Infrastructure REST APIs.",
   "main": "OciFnAuth.js",
   "scripts": {
