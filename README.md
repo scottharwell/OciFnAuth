@@ -6,31 +6,40 @@ This extension creates the `Authorization` header for requests to Oracle's OCI R
 
 This extension requires that you use an OCI account that has permissions to access the OCI REST APIs and that you have configured a public/private key pair for your account.
 
-## Example
+## Request Headers
 
 The following is a list of headers used to generate the signing string based on the HTTP method that is used.
 
-* `Host`: Provided by Paw. You do not need to manually set this value.
-* `Date`: Use the `{Timestamp}` dynamic value built into Paw to create an RFC 1123/2822 value for the current time. *`x-date` may be used as an alternative for `Date`*.
-* `Content-Length`: Provided by Paw. You do not need to manually set this value. 
-* `Content-Type`: `application/json`
-* `Accept`: `application/json`
-* `x-content-sha256`: Use the `SHA256` dynamic value with base64 encoding as the value for this header.  In the input for the `SHA256` dynamic value, set the input to another dynamic value `Request Raw Body`.  These native dynamic values will generate the proper hash for this header.
-* `Authorization`: Use this extension!
+| Header             | Description                                                                                                                                                                                                                                                            |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Host`             | Provided by Paw. You do not need to manually set this value.                                                                                                                                                                                                           |
+| `Date`             | Use the `{Timestamp}` dynamic value built into Paw to create an RFC 1123/2822 value for the current time. *`x-date` may be used as an alternative for `Date`*.                                                                                                         |
+| `Content-Length`   | Provided by Paw. You do not need to manually set this value.                                                                                                                                                                                                           |
+| `Content-Type`     | `application/json`                                                                                                                                                                                                                                                     |
+| `Accept`           | `application/json`                                                                                                                                                                                                                                                     |
+| `x-content-sha256` | Use the `SHA256` dynamic value with base64 encoding as the value for this header.  In the input for the `SHA256` dynamic value, set the input to another dynamic value `Request Raw Body`.  These native dynamic values will generate the proper hash for this header. |
+| `Authorization`    | Use this extension!                                                                                                                                                                                                                                                    |
 
-Example `GET` request configuration:
 
-* `Date`: Use the `{Timestamp}` dynamic value to create an RFC 1123/2822 value for the current time.
-* `Accept`: `application/json`
-* `Authorization`: `{OCI API Auth}` Use this extension!
+### Example `GET` Request Header Configuration
+
+| Header          | Description                                                                                |
+| --------------- | ------------------------------------------------------------------------------------------ |
+| `Date`          | Use the `{Timestamp}` dynamic value to create an RFC 1123/2822 value for the current time. |
+| `Accept`        | `application/json`                                                                         |
+| `Authorization` | `{OCI API Auth}` Use this extension!                                                       |
+
 
 ![Header Configuration](https://raw.githubusercontent.com/scottharwell/OciFnAuth/main/img/get_headers.png)
 
-Example `POST` request configuration:
+### Example `POST` Request Header Configuration
 
-* `Date`: Use the `{Timestamp}` dynamic value to create an RFC 1123/2822 value for the current time.
-* `x-content-sha256`:  Use the `{SHA256}` dynamic value with base64 encoding as the value for this header.
-* `Authorization`: `{OCI API Auth}` Use this extension!
+| Header             | Description                                                                                |
+| ------------------ | ------------------------------------------------------------------------------------------ |
+| `Date`             | Use the `{Timestamp}` dynamic value to create an RFC 1123/2822 value for the current time. |
+| `x-content-sha256` | Use the `{SHA256}` dynamic value with base64 encoding as the value for this header.        |
+| `Authorization`    | `{OCI API Auth}` Use this extension!                                                       |
+
 
 ![Header Configuration](https://raw.githubusercontent.com/scottharwell/OciFnAuth/main/img/post_headers.png)
 
@@ -48,7 +57,11 @@ Because of the private key use, you should enable encryption in your Paw project
 
 ## Development
 
+A makefile is provided with commands to assist in building the extension.
+
 ### Prerequisites
+
+Run this command after cloning the repository to your development machine.
 
 ```shell
 npm install
@@ -56,17 +69,23 @@ npm install
 
 ### Build
 
+Transpiles the extension and creates distribution files in the `build` folder.
+
 ```shell
-npm run build
+make build
 ```
 
 ### Install
+
+Runs the build process and moves a zipped extension file into your Paw extensions folder for local testing in Paw.
 
 ```shell
 make install
 ```
 
 ### Test
+
+Runs npm testing suite(s).
 
 ```shell
 npm test
@@ -76,4 +95,4 @@ npm test
 
 This Paw Extension is released under the [MIT License](./LICENSE). Feel free to fork, and modify!
 
-Copyright © 2020 Scott Harwell
+Copyright © 2022 Scott Harwell
