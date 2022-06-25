@@ -1,0 +1,12 @@
+---
+yaml-files:
+  - '*.yaml'
+  - '*.yml'
+  - '.yamllint'
+
+ignore: |
+  node_modules/
+  build/
+  .vscode/
+  all/this/directory/
+  *.template.yaml
