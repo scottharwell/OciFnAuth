@@ -11,7 +11,7 @@ This extension requires that you use an OCI account that has permissions to acce
 The following is a list of headers used to generate the signing string based on the HTTP method that is used.
 
 | Header             | Description                                                                                                                                                                                                                                                            |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `Host`             | Provided by Paw. You do not need to manually set this value.                                                                                                                                                                                                           |
 | `Date`             | Use the `{Timestamp}` dynamic value built into Paw to create an RFC 1123/2822 value for the current time. *`x-date` may be used as an alternative for `Date`*.                                                                                                         |
 | `Content-Length`   | Provided by Paw. You do not need to manually set this value.                                                                                                                                                                                                           |
@@ -24,7 +24,7 @@ The following is a list of headers used to generate the signing string based on 
 ### Example `GET` Request Header Configuration
 
 | Header          | Description                                                                                |
-| --------------- | ------------------------------------------------------------------------------------------ |
+|-----------------|--------------------------------------------------------------------------------------------|
 | `Date`          | Use the `{Timestamp}` dynamic value to create an RFC 1123/2822 value for the current time. |
 | `Accept`        | `application/json`                                                                         |
 | `Authorization` | `{OCI API Auth}` Use this extension!                                                       |
@@ -35,7 +35,7 @@ The following is a list of headers used to generate the signing string based on 
 ### Example `POST` Request Header Configuration
 
 | Header             | Description                                                                                |
-| ------------------ | ------------------------------------------------------------------------------------------ |
+|--------------------|--------------------------------------------------------------------------------------------|
 | `Date`             | Use the `{Timestamp}` dynamic value to create an RFC 1123/2822 value for the current time. |
 | `x-content-sha256` | Use the `{SHA256}` dynamic value with base64 encoding as the value for this header.        |
 | `Authorization`    | `{OCI API Auth}` Use this extension!                                                       |
