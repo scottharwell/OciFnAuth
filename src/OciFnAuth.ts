@@ -76,8 +76,9 @@ class OciFnAuth {
 			headersToSign[ 0 ] = "x-date";
 		}
 
-		const hostname = request.urlBase.replace(/(http|https)\:\/\/([a-zA-Z0-9\.\-_]+)\/.*/gi, "$2");
-		const urlPath = request.urlBase.replace(/(http|https)\:\/\/[a-zA-Z0-9\.\-_]+/gi, "");
+		const parsedUrl = new URL(request.urlBase);
+		const hostname = parsedUrl.host;
+		const urlPath = parsedUrl.pathname;
 
 		const apiKeyId = `${this.tenancyId}/${this.userId}/${this.keyFingerprint}`;
 		let signingStr = "";
@@ -109,7 +110,7 @@ class OciFnAuth {
 					signingStr += requestTarget;
 					break;
 				case "content-length":
-					signingStr += header + ": " + body.length;
+					signingStr += header + ": " + new TextEncoder().encode(body).length;
 					break;
 				case "host":
 					signingStr += header + ": " + hostname;
@@ -159,7 +160,7 @@ class OciFnAuth {
 		if (!xDate) {
 			console.log("x-date header not set. Adding value.");
 			// @ts-ignore
-			var dynamicTimeValue = DynamicValue('com.luckymarmot.TimestampDynamicValue', {
+			const dynamicTimeValue = DynamicValue('com.luckymarmot.TimestampDynamicValue', {
 				now: true,
 				format: 2
 			});
@@ -173,9 +174,9 @@ class OciFnAuth {
 			if (!contentHash) {
 				console.log("x-content-sha256 header not set. Adding value.");
 				// @ts-ignore
-				var rawBodyDynamicValue = DynamicValue('com.luckymarmot.RequestRawBodyDynamicValue');
+				const rawBodyDynamicValue = DynamicValue('com.luckymarmot.RequestRawBodyDynamicValue');
 				// @ts-ignore
-				var hashDynamicValue = DynamicValue('com.luckymarmot.HashDynamicValue', {
+				const hashDynamicValue = DynamicValue('com.luckymarmot.HashDynamicValue', {
 					input: rawBodyDynamicValue,
 					hashType: 5,
 					encoding: 1

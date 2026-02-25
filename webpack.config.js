@@ -7,7 +7,7 @@ const config = {
   target: 'node-webkit',
   entry: [
     'jsrsasign',
-    './src/OciFnAuth.js'
+    './src/OciFnAuth.ts'
   ],
   output:{
     path: path.join(__dirname, 'build/me.harwell.PawExtensions.OciFnAuth'),
@@ -15,14 +15,17 @@ const config = {
     publicPath: '/build/',
     filename: name + '.js'
   },
+  resolve: {
+    extensions: ['.ts', '.js']
+  },
   module: {
     rules: [
       {
-        use: 'babel-loader',
+        test: /\.ts$/,
+        use: 'ts-loader',
         include: [
           path.resolve(__dirname, 'src')
-        ],
-        test: /\.js$/
+        ]
       }
     ]
   }
